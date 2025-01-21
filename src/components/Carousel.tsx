@@ -14,12 +14,11 @@ const Carousel: React.FC<CarouselProps> = ({
   images,
   itemWidth = 130,
   frameSize = 3,
-  step = 1,
+  step = 3,
   animationDuration = 1000,
   infinite = false,
 }) => {
   const [position, setPosition] = useState(0);
-  const [currentStep, setCurrentStep] = useState(0);
 
   const totalWidth = images.length * itemWidth;
   const visibleWidth = frameSize * itemWidth;
@@ -32,7 +31,6 @@ const Carousel: React.FC<CarouselProps> = ({
     setPosition(prev =>
       Math.max(prev - step * itemWidth, -totalWidth + visibleWidth),
     );
-    setCurrentStep(prev => prev + 1);
   };
 
   const handlePrev = () => {
@@ -41,7 +39,6 @@ const Carousel: React.FC<CarouselProps> = ({
     }
 
     setPosition(prev => Math.min(prev + step * itemWidth, 0));
-    setCurrentStep(prev => prev - 1);
   };
 
   return (
@@ -64,7 +61,7 @@ const Carousel: React.FC<CarouselProps> = ({
           }}
         >
           {images.map((src, index) => (
-            <li key={index}>
+            <li key={src}>
               <img
                 src={src}
                 alt={`Slide ${index + 1}`}
@@ -84,7 +81,6 @@ const Carousel: React.FC<CarouselProps> = ({
         >
           Prev
         </button>
-        <p>Current step: {currentStep}</p>
         <button
           data-cy="next"
           type="button"

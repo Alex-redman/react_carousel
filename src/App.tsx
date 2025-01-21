@@ -27,17 +27,19 @@ class App extends React.Component<{}, State> {
     ],
     itemWidth: 130,
     frameSize: 3,
-    step: 1,
+    step: 3,
     animationDuration: 1000,
     infinite: false,
   };
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  handleInputChange = <K extends keyof State>(
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value, type, checked } = e.target;
 
     this.setState({
-      [name]: name === 'infinite' ? e.target.checked : Number(value),
-    } as unknown as Pick<State, keyof State>);
+      [name]: type === 'checkbox' ? checked : Number(value),
+    } as Pick<State, K>);
   };
 
   render() {
